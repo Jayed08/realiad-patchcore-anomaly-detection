@@ -177,7 +177,7 @@ Evaluated on the official **Real-IAD (Single-View UIAD)** test set across all 30
 
 ```text
 ├── app.py                         # Streamlit web application for visual inspection
-├── detect-defection.ipynb         # Full Jupyter training, feature extraction & evaluation pipeline
+├── real-iad-anomaly-detection.ipynb         # Full Jupyter training, feature extraction & evaluation pipeline
 ├── requirements.txt               # Python package dependencies (Python 3.12)
 ├── Dockerfile                     # Containerization setup for Python 3.12 runtime
 ├── realiad_patchcore_model.pt     # Serialized artifact (backbone state, memory banks, thresholds)
@@ -285,7 +285,7 @@ print(f"Threshold:     {result['threshold']:.2f}")
 For end-to-end dataset downloading, feature extraction, memory bank subsampling, and metric evaluation, open the Jupyter Notebook:
 
 ```bash
-jupyter lab detect-defection.ipynb
+jupyter lab real-iad-anomaly-detection.ipynb
 ```
 
 ---
