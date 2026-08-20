@@ -194,7 +194,7 @@ Evaluated on the official **Real-IAD (Single-View UIAD)** test set across all 30
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/jayedansari/realiad-patchcore-anomaly-detection.git
+git clone https://github.com/Jayed08/realiad-patchcore-anomaly-detection.git
 cd realiad-patchcore-anomaly-detection
 ```
 
