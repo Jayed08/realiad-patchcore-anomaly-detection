@@ -13,25 +13,6 @@ An end-to-end normal-only industrial anomaly detection and localization system b
 
 ---
 
-## 📌 Table of Contents
-
-- [Live Demo](#-live-demo)
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [Methodology & Architecture](#-methodology--architecture)
-- [Benchmark Performance](#-benchmark-performance)
-- [Project Structure](#-project-structure)
-- [Installation & Setup](#-installation--setup)
-- [Usage](#-usage)
-  - [1. Running Streamlit Web App](#1-running-streamlit-web-app)
-  - [2. Python Inference API](#3-python-inference-api)
-  - [3. Training & Notebook Exploration](#4-training--notebook-exploration)
-- [Dataset (Real-IAD)](#-dataset-real-iad)
-- [Results Visualization](#-results-visualization)
-- [License](#-license)
-
----
-
 ## 🌐 Live Demo
 
 Experience the model directly in your browser:  
