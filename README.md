@@ -9,8 +9,6 @@
 
 An end-to-end normal-only industrial anomaly detection and localization system built on the **Real-IAD** dataset. The system uses a **PatchCore-style** nearest-neighbor approach with a pretrained **Wide ResNet-50-2** backbone and category-specific normal memory banks.
 
-🔗 **Live Web Application:** [https://realiad-patchcore-anomaly-detection-jayed.streamlit.app/](https://realiad-patchcore-anomaly-detection-jayed.streamlit.app/)
-
 ---
 
 ## 🌐 Live Demo
