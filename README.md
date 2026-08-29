@@ -24,9 +24,8 @@ An end-to-end normal-only industrial anomaly detection and localization system b
 - [Installation & Setup](#-installation--setup)
 - [Usage](#-usage)
   - [1. Running Streamlit Web App](#1-running-streamlit-web-app)
-  - [2. Docker Deployment](#2-docker-deployment)
-  - [3. Python Inference API](#3-python-inference-api)
-  - [4. Training & Notebook Exploration](#4-training--notebook-exploration)
+  - [2. Python Inference API](#3-python-inference-api)
+  - [3. Training & Notebook Exploration](#4-training--notebook-exploration)
 - [Dataset (Real-IAD)](#-dataset-real-iad)
 - [Results Visualization](#-results-visualization)
 - [License](#-license)
@@ -231,23 +230,7 @@ Open `http://localhost:8501` in your browser.
 
 ---
 
-### 2. Docker Deployment
-
-Build and run the containerized application (CPU runtime):
-
-```bash
-# Build the Docker image
-docker build -t realiad-patchcore-anomaly-detection:latest .
-
-# Run the container
-docker run -p 8501:8501 realiad-patchcore-anomaly-detection:latest
-```
-
-Access the app at `http://localhost:8501`.
-
----
-
-### 3. Python Inference API
+### 2. Python Inference API
 
 Run inference programmatically in Python:
 
@@ -280,7 +263,7 @@ print(f"Threshold:     {result['threshold']:.2f}")
 
 ---
 
-### 4. Training & Notebook Exploration
+### 3. Training & Notebook Exploration
 
 For end-to-end dataset downloading, feature extraction, memory bank subsampling, and metric evaluation, open the Jupyter Notebook:
 
