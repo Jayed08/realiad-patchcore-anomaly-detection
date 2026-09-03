@@ -2,9 +2,9 @@
 
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://realiad-patchcore-anomaly-detection-jayed.streamlit.app/)
+[![Hugging Face Model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-ffcc00.svg)](https://huggingface.co/JayedAnsari/realiad-patchcore)
 [![PyTorch 2.10](https://img.shields.io/badge/PyTorch-2.10.0-ee4c2c.svg)](https://pytorch.org/)
 [![Torchvision 0.25](https://img.shields.io/badge/Torchvision-0.25.0-orange.svg)](https://pytorch.org/vision/)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 An end-to-end normal-only industrial anomaly detection and localization system built on the **Real-IAD** dataset. The system uses a **PatchCore-style** nearest-neighbor approach with a pretrained **Wide ResNet-50-2** backbone and category-specific normal memory banks.
@@ -34,7 +34,7 @@ In industrial manufacturing, anomalies (scratches, dents, cracks, impurities) ar
 - **Memory-Efficient Memory Bank Sampling**: Streams extracted patch features and applies 1% random subsampling to construct category-specific normal memory banks while keeping memory usage manageable.
 - **30 Industrial Categories**: Comprehensive evaluation across all 30 Real-IAD classes (electronics, mechanical parts, consumer goods).
 - **Interactive Streamlit Web Dashboard**: Real-time image upload, category-specific threshold-based prediction, and 3-panel visualization (Original, Heatmap, Localization Overlay).
-- **Dockerized Deployment**: Fully containerized CPU-based deployment with Python 3.12 for local and cloud hosting.
+- **Automated Model Hub Integration**: Model weights, category memory banks, and decision thresholds are automatically fetched and cached from Hugging Face Hub ([`JayedAnsari/realiad-patchcore`](https://huggingface.co/JayedAnsari/realiad-patchcore)) on first run.
 
 ---
 
@@ -154,13 +154,13 @@ Evaluated on the official **Real-IAD (Single-View UIAD)** test set across all 30
 ## 📁 Project Structure
 
 ```text
-├── app.py                         # Streamlit web application for visual inspection
-├── real-iad-anomaly-detection.ipynb         # Full Jupyter training, feature extraction & evaluation pipeline
-├── requirements.txt               # Python package dependencies (Python 3.12)
-├── Dockerfile                     # Containerization setup for Python 3.12 runtime
-├── realiad_patchcore_model.pt     # Serialized artifact (backbone state, memory banks, thresholds)
-└── README.md                      # Project documentation & benchmark report
+├── app.py                             # Streamlit web application with Hugging Face model loading
+├── real-iad-anomaly-detection.ipynb   # Full Jupyter training, feature extraction & evaluation pipeline
+├── requirements.txt                   # Python package dependencies (Python 3.12)
+└── README.md                          # Project documentation & benchmark report
 ```
+
+> **Note:** The serialized model artifact (`realiad_patchcore_model.pt`) containing the backbone weights, category memory banks, and decision thresholds is hosted on Hugging Face ([`JayedAnsari/realiad-patchcore`](https://huggingface.co/JayedAnsari/realiad-patchcore)) and downloaded automatically on runtime.
 
 ---
 
@@ -201,6 +201,8 @@ streamlit run app.py
 
 Open `http://localhost:8501` in your browser.
 
+> On first execution, the app automatically downloads and caches the model artifact (`realiad_patchcore_model.pt`) from the Hugging Face Hub repository [`JayedAnsari/realiad-patchcore`](https://huggingface.co/JayedAnsari/realiad-patchcore).
+
 #### Interface Workflow:
 1. **Sidebar**: Inspect model architecture parameters, feature dimensions, and test set benchmark statistics.
 2. **Category Selection**: Choose your target industrial object class (e.g., `zipper`, `pcb`, `bottle_cap`).
@@ -217,13 +219,16 @@ Run inference programmatically in Python:
 from PIL import Image
 from app import load_model, predict
 
-# 1. Load detector model
-feature_extractor, memory_banks, thresholds, transform, config, device, _ = load_model("realiad_patchcore_model.pt")
+# 1. Load detector model (automatically fetched from Hugging Face: JayedAnsari/realiad-patchcore)
+feature_extractor, memory_banks, thresholds, transform, config, device, err = load_model()
+
+if err:
+    raise RuntimeError(f"Error loading model: {err}")
 
 # 2. Open an inspection image
 img = Image.open("sample_inspection.png").convert("RGB")
 
-# 3. Perform defect detection
+# 3. Perform defect detection & localization
 result = predict(
     image=img,
     category="zipper",
@@ -267,8 +272,8 @@ Dataset link: [Hugging Face Real-IAD](https://huggingface.co/datasets/Real-IAD/R
 
 The inspection interface produces three synchronized inspection outputs:
 1. **Original Image**: Raw $512 \times 512$ industrial surface.
-2. **Anomaly Heatmap**: Continuous Jet-colormap intensity gradient showing localized patch anomaly distance.
-3. **Localization Overlay**: $50\% / 50\%$ blended alpha overlay highlighting the exact anomalous region for quality control operators.
+2. **Anomaly Heatmap**: High-resolution Inferno-colormap gradient showing localized patch anomaly distances.
+3. **Localization Overlay**: Blended visualization ($70\%$ original image $+ 30\%$ Inferno heatmap) highlighting the exact anomalous region for quality control inspection.
 
 ---
 
